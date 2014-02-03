@@ -1,0 +1,78 @@
+## Macro title: Scrollbar
+## Body processing: N
+## Output: HTML
+##
+## Date created: 29-Jan-2014
+## Date updated: 29-Jan-2014
+## Developed by: Martin Morrey
+##
+## Generates links for the next, parent and previous pages in a document tree.
+## Doubtful compatibility with older browsers
+
+<style style="display:none">
+.scrollbar-macro {width:98%;display:table;background-color:#f0f0f0;margin:5px 20px 5px 5px; padding:5px 5px;}
+.scrollbar-macro > div { display:table-cell; }
+.scrollbar-macro .prev { width:33%; text-align:left; float:left; background-color:#f0f0f0"; }
+.scrollbar-macro .parent{ text-align:center; float:left; width:33%;background-color:#f0f0f0"; }
+.scrollbar-macro .next{ width:33%; text-align:right; float:right; background-color:#f0f0f0";}
+
+.scrollbar-macro  .right {
+ display: inline-block;
+ transform:rotate(90deg);
+ -ms-transform:rotate(90deg); /* IE 9 */
+ -webkit-transform:rotate(90deg); /* Safari and Chrome */
+}
+.scrollbar-macro  .left {
+ display: inline-block;
+ transform:rotate(270deg);
+ -ms-transform:rotate(270deg); /* IE 9 */
+ -webkit-transform:rotate(270deg); /* Safari and Chrome */
+}
+</style>
+
+## @noparams
+ 
+#set ($count = 0)
+#set ($parent = $content.getParent())
+#set ($name = $content.getNameForComparison())
+#set ($siblings = $parent.getSortedChildren())
+#set ($total = $siblings.size())
+#set( $nextPage = false )
+#set( $foundSelf = false )
+#set( $prevPage = false)
+
+<div class="scrollbar-macro">
+
+#foreach ($child in $siblings)
+    #if ($foundSelf && !$prevPage)
+        #set($prevPage = $child)
+    #end
+    #set ($childName = $child.getNameForComparison()) 
+    #if ($childName == $name )
+        #set($foundSelf = $child)
+        #set($nextPage = $prevChild)
+    #end
+    #set($count = $count + 1)
+    #set($prevChild = $child)
+#end
+
+<div class="prev">
+#if ($prevPage)
+    <a href="$req.contextPath$prevPage.urlPath">
+    <strong><div class="left">&#8679;</div> $webwork.htmlEncode($prevPage.displayTitle)</strong>
+    </a>
+#end
+</div>
+
+<div class="parent">
+<a href="$req.contextPath$parent.urlPath"><strong>&#8679; $webwork.htmlEncode($parent.displayTitle)</strong></a>
+</div>
+
+<div class="next">
+#if ($nextPage)
+    <a href="$req.contextPath$nextPage.urlPath">
+    <strong>$webwork.htmlEncode($nextPage.displayTitle) <div class="right">&#8679;</div></strong>
+    </a>
+#end
+</div>
+</div>
