@@ -12,9 +12,9 @@
 <style style="display:none">
 .scrollbar-macro {width:98%;display:table;background-color:#f0f0f0;margin:5px 20px 5px 5px; padding:5px 5px;}
 .scrollbar-macro > div { display:table-cell; }
-.scrollbar-macro .prev { width:33%; text-align:left; float:left; background-color:#f0f0f0"; }
+.scrollbar-macro .next { width:33%; text-align:left; float:left; background-color:#f0f0f0"; }
 .scrollbar-macro .parent{ text-align:center; float:left; width:33%;background-color:#f0f0f0"; }
-.scrollbar-macro .next{ width:33%; text-align:right; float:right; background-color:#f0f0f0";}
+.scrollbar-macro .prev { width:33%; text-align:right; float:right; background-color:#f0f0f0";}
 
 .scrollbar-macro  .right {
  display: inline-block;
@@ -56,10 +56,10 @@
     #set($prevChild = $child)
 #end
 
-<div class="prev">
-#if ($prevPage)
-    <a href="$req.contextPath$prevPage.urlPath">
-    <strong><div class="left">&#8679;</div> $webwork.htmlEncode($prevPage.displayTitle)</strong>
+<div class="next">
+#if ($nextPage)
+    <a href="$req.contextPath$nextPage.urlPath">
+    <strong><div class="left">&#8679;</div> $webwork.htmlEncode($nextPage.displayTitle) </strong>
     </a>
 #end
 </div>
@@ -68,11 +68,12 @@
 <a href="$req.contextPath$parent.urlPath"><strong>&#8679; $webwork.htmlEncode($parent.displayTitle)</strong></a>
 </div>
 
-<div class="next">
-#if ($nextPage)
-    <a href="$req.contextPath$nextPage.urlPath">
-    <strong>$webwork.htmlEncode($nextPage.displayTitle) <div class="right">&#8679;</div></strong>
+<div class="prev">
+#if ($prevPage)
+    <a href="$req.contextPath$prevPage.urlPath">
+    <strong>$webwork.htmlEncode($prevPage.displayTitle) <div class="right">&#8679;</div></strong>
     </a>
 #end
 </div>
+
 </div>
